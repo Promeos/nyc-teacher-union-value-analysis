@@ -2,36 +2,36 @@
 
 ![nyc-teacher-compensation-summary](./visuals/nyc-teacher-compensation-summary.png)
 
-## Project Description:
+## Project Description
 
-This project aims to provide NYC teachers with a comprehensive understanding of their expected annual salary growth, factoring in the impact of United Federation of Teachers salary contracts from 2014 to 2023. By offering insights into the relationship between salary contracts and individual compenstation the objective is to empower teachers to improve their financial well-being and evaluate the value they receive from UFT-negotiated contracts.
+This project aims to provide NYC teachers with a comprehensive understanding of their expected annual salary growth, factoring in the impact of United Federation of Teachers salary contracts from 2014 to 2023. By offering insights into the relationship between salary contracts and individual compensation, the objective is to empower teachers to improve their financial well-being and evaluate the value they receive from UFT-negotiated contracts.
 
-## Table of Contents:
+## Table of Contents
 
-    Project Charter
-    Getting Started
-    Data Sources
-    Data Dictionary
-    Data Cleaning
-    Analysis
-    Results
-    Visualizations
-    License
-    Acknowledgments
+- [Getting Started](#getting-started)
+- [Data Sources](#acquire)
+- [Data Dictionary](#data-dictionary)
+- [Data Cleaning](#data-cleaning)
+- [Analysis](#analysis)
+- [Results](#results)
+- [Visualizations](#visualizations)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
 
-### Getting Started:
+### Getting Started
+
 To get started with this project, follow these steps:
 
 1. Clone the repository to your local machine:
 
     ```bash
-    git clone https://github.com/your-username/your-project.git
+    git clone https://github.com/promeos/Teacher_Payroll_Analysis.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd your-project
+    cd Teacher_Payroll_Analysis
     ```
 
 3. Create a virtual environment (optional but recommended):
@@ -60,9 +60,9 @@ To get started with this project, follow these steps:
     pip install -r requirements.txt
     ```
 
-6. Download the dataset from [Data Source](https://data.cityofnewyork.us/City-Government/Citywide-Payroll-Data-Fiscal-Year-/k397-673e/about_data) and place it in the project directory.
+6. Download the dataset from [NYC Citywide Payroll Data (Fiscal Year)](https://data.cityofnewyork.us/City-Government/Citywide-Payroll-Data-Fiscal-Year-/k397-673e/about_data) and place it in the project directory.
 
-7. You're now ready to run the project! Open the main notebook or script and follow the instructions provided for data analysis, visualization, etc.
+7. Open `nyc_teacher_salary_analysis.ipynb` and run the cells to reproduce the analysis.
 
 ### Data Dictionary
 
@@ -87,24 +87,42 @@ To get started with this project, follow these steps:
 | Total Other Pay          | Includes any compensation in addition to gross salary and overtime pay, i.e., Differentials, lump sums, uniform allowance, meal allowance, retroactive pay increases, settlement amounts, and bonus pay, if applicable | Number     |
 
 
-### Data Cleaning:
+### Data Cleaning
 
-Describe the steps taken to clean and preprocess the data, including any challenges encountered and solutions implemented.
-Analysis:
+- Filtered the NYC Citywide Payroll dataset to full-time teachers employed by the Department of Education (Pedagogical).
+- Removed teachers who ceased employment and those with year-over-year salary decreases to focus on typical career progression.
+- Created anonymized Employee IDs from name and hire date combinations for longitudinal tracking.
+- Engineered salary delta features (year-over-year percentage and monetary changes) and computed UFT union dues by fiscal year.
+- Treated negative Additional Pay values as null to avoid skewing compensation calculations.
 
-Detail the methodologies and techniques used to analyze the data, including key metrics and parameters considered.
-Results:
+### Analysis
 
-Summarize the key findings from the analysis, highlighting any trends, patterns, or noteworthy insights.
-Summary:
+- Compared year-over-year salary increases against UFT contract schedule rates across three contract periods (2009-2018, 2019-2021, 2022-2027).
+- Analyzed whether annual salary monetary increases cover UFT union dues.
+- Segmented all analyses by employment tenure (0-5 years vs. 6+ years) to identify differences between newer and experienced teachers.
+- Examined both cumulative and year-over-year salary growth trends using median values to reduce the effect of outliers.
 
-### Visualizations:
+### Results
 
+- Most teachers receive salary increases at or above the UFT schedule rate each year.
+- Teachers with 0-5 years of tenure see larger percentage salary increases than their tenured (6+) peers, reflecting step increases on the salary schedule.
+- The 2022-2027 contract period shows improved total compensation outcomes compared to prior periods.
+- Annual salary monetary increases typically exceed UFT union dues, meaning teachers retain a net benefit from negotiated raises.
+- New teachers can reach $100K in base salary with fewer years of service under the current contract.
 
-### License:
+### Visualizations
+
+All visualizations are available in the analysis notebook [`nyc_teacher_salary_analysis.ipynb`](nyc_teacher_salary_analysis.ipynb), including:
+- Salary distributions by contract period and employment category
+- Year-over-year salary increase comparisons against UFT schedule rates
+- Cumulative and annual compensation growth trends by tenure group
+- Proportion of teachers receiving salary increases each fiscal year
+
+### License
 
 This project is licensed under the MIT License.
 
-### Acknowledgments:
+### Acknowledgments
 
-Give credit to any resources, datasets, or libraries used in the project.
+- [NYC Open Data](https://opendata.cityofnewyork.us/) for the Citywide Payroll Data (Fiscal Year) dataset.
+- [United Federation of Teachers (UFT)](https://www.uft.org/) salary schedules and contract documents (2009-2018, 2018-2027).
