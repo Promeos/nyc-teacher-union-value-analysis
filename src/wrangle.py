@@ -60,6 +60,8 @@ UNION_DUES_BY_YEAR = {
     2021: 62.39 * 24,
     2022: 63.81 * 24,
     2023: 65.50 * 24,
+    2024: 65.60 + 66.94 * 23,  # 1 check @ $65.60 + 23 checks @ $66.94
+    2025: 66.94 * 3 + 68.97 * 14 + 70.70 * 7,  # 3 + 14 + 7 checks across rate tiers
 }
 
 FISCAL_YEAR_RATES = {
@@ -73,6 +75,8 @@ FISCAL_YEAR_RATES = {
     2021: 3,
     2022: 0,
     2023: 3,
+    2024: 3,
+    2025: 3,
 }
 
 # Bin definitions
@@ -82,10 +86,10 @@ EMPLOYMENT_LABELS = ['0-5', '6+']
 CONTRACT_BINS = [2009, 2018, 2021, 2027]
 CONTRACT_LABELS = ["2009-2018", "2019-2021", "2022-2027"]
 
-SALARY_BINS = [40000, 60000, 80000, 100000, 120000, 160000]
+SALARY_BINS = [40000, 60000, 80000, 100000, 120000, 200000]
 SALARY_LABELS = ['40k-60k', '60k-80k', '80k-100k', '100k-120k', '120k+']
 
-ADDITIONAL_PAY_BINS = [-1, 0, 1000, 94470]
+ADDITIONAL_PAY_BINS = [-1, 0, 1000, 300000]
 ADDITIONAL_PAY_LABELS = ['$0', '0-$1K', '$1k+']
 
 DELTA_BINS = [-1, 0, 5, 10, 90]
@@ -94,7 +98,7 @@ DELTA_LABELS = ['0%', '0-5%', '5-10%', '10+%']
 SIMPLIFIED_DELTA_BINS = [-1, 0, 90]
 SIMPLIFIED_DELTA_LABELS = ['No Change', 'Salary Increased']
 
-MONETARY_DIFF_BINS = [-1, 0, 5000, 10000, 58000]
+MONETARY_DIFF_BINS = [-1, 0, 5000, 10000, 70000]
 MONETARY_DIFF_LABELS = ['0', '0-$5k', '$5k-$10k', '$10k+']
 
 EFFECTIVE_RATE_BINS = [-1, -0.0004, 0, 90]
@@ -140,6 +144,11 @@ def read_teacher_data(cached_file='./data/teachers_payroll.parquet'):
 def _load_and_filter_payroll(file_path):
     '''Reads city payroll CSV and filters to full-time teachers.'''
     data = pd.read_csv(file_path, usecols=COLS_TO_USE, engine='pyarrow')
+
+    # Handle dollar-formatted columns (e.g., "$65,921.00" → 65921.0)
+    for col in ['Base Salary', 'Total Other Pay']:
+        if data[col].dtype == object:
+            data[col] = data[col].str.replace(r'[$,]', '', regex=True).astype(float)
 
     conditions = (
         (data['Agency Name'] == 'DEPT OF ED PEDAGOGICAL') &
