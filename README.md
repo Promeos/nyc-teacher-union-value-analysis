@@ -1,5 +1,7 @@
 # NYC Teacher Union Value Analysis
 
+![Net Annual Compensation Gain by Contract Period](./visuals/net-compensation-gain-by-contract.png)
+
 **Do UFT union dues pay for themselves?** This project analyzes ~492,000 salary records for NYC public school teachers (FY2015-2025) to measure whether UFT-negotiated raises exceed the cost of union membership.
 
 ## Key Findings
